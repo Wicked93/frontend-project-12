@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom';
 
 const RegisterPage = () => (
   <div>
-    <h1>Регистрация</h1>
+    <h1>Р РµРіРёСЃС‚СЂР°С†РёСЏ</h1>
     <p>
-      <Link to="/login">Войти</Link>
+      <Link to="/login">Р’РѕР№С‚Рё</Link>
     </p>
   </div>
 );
