@@ -23,9 +23,9 @@ const AddModal = () => {
   const ChannelVlidate = yup.object().shape({
     nameChannel: yup
       .string()
-      .required('Обязательное поле')
-      .min(3, 'От 3 до 20 символов')
-      .max(20, 'От 3 до 20 символов'),
+      .required('РћР±СЏР·Р°С‚РµР»СЊРЅРѕРµ РїРѕР»Рµ')
+      .min(3, 'РћС‚ 3 РґРѕ 20 СЃРёРјРІРѕР»РѕРІ')
+      .max(20, 'РћС‚ 3 РґРѕ 20 СЃРёРјРІРѕР»РѕРІ'),
   });
   return (
     <Formik
@@ -57,7 +57,7 @@ const AddModal = () => {
         <form className="py-1 border rounded-2" onSubmit={handleSubmit}>
           <Modal centered show onHide={() => dispatch(closeModal())}>
             <Modal.Header closeButton>
-              <Modal.Title>Добавить канал</Modal.Title>
+              <Modal.Title>Р”РѕР±Р°РІРёС‚СЊ РєР°РЅР°Р»</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <input
@@ -67,15 +67,15 @@ const AddModal = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.nameChannel}
-                placeholder="Имя канала"
+                placeholder="РРјСЏ РєР°РЅР°Р»Р°"
               />
               {errors.nameChannel && touched.nameChannel && errors.nameChannel}
               <div className="d-flex justify-content-end">
                 <Button onClick={() => dispatch(closeModal())} className="me-2" variant="secondary" disabled={isSubmitting}>
-                  Отменить
+                  РћС‚РјРµРЅРёС‚СЊ
                 </Button>
                 <Button type="submit" variant="primary" disabled={isSubmitting}>
-                  Отправить
+                  РћС‚РїСЂР°РІРёС‚СЊ
                 </Button>
               </div>
             </Modal.Body>
