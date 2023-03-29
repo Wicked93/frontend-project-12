@@ -19,16 +19,17 @@ const HomePage = () => {
 
   const dataChannels = useSelector(getChannels);
   const dataMessages = useSelector(getMessage);
-  const dataСurrentID = useSelector(getActiveChannel);
+  const dataРЎurrentID = useSelector(getActiveChannel);
 
-  const forrectMessage = dataMessages.filter((item) => item.channelId === dataСurrentID);
-  const correctChat = dataChannels.filter((item) => item.id === dataСurrentID);
+  const forrectMessage = dataMessages.filter((item) => item.channelId === dataРЎurrentID);
+  const correctChat = dataChannels.filter((item) => item.id === dataРЎurrentID);
   const correctChatName = correctChat[0]?.name;
+  // eslint-disable-next-line no-debugger
   return (
     <div className="container h-100 my-4 overflow-hidden rounded shadow">
       <div className="row h-100 bg-white flex-md-row">
-        <Channels channels={dataChannels} currectChannelID={dataСurrentID} />
-        <Message message={forrectMessage} currectChannelID={dataСurrentID} correctChatName={correctChatName} />
+        <Channels channels={dataChannels} currectChannelID={dataРЎurrentID} />
+        <Message message={forrectMessage} currectChannelID={dataРЎurrentID} correctChatName={correctChatName} />
       </div>
     </div>
   );
