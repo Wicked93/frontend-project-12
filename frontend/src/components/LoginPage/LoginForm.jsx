@@ -5,6 +5,7 @@ import {
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
+import { Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -14,8 +15,8 @@ import { useToastify } from '../../contexts/ToastifyContext';
 
 const LoginForm = () => {
   const [authFailed, setAuthFailed] = useState(false);
-  const { errorToast } = useToastify();
   const { t } = useTranslation();
+  const { errorToast } = useToastify();
   const SignupSchema = yup.object().shape({
     username: yup.string().required(t('loginPage.required')),
     password: yup.string().required(t('loginPage.required')),
@@ -42,7 +43,7 @@ const LoginForm = () => {
         } catch (err) {
           if (err.response.status === 401) {
             setAuthFailed(true);
-            console.log('РѕС€РёР±РєР° 401');
+            console.log('ошибка 401');
           } else if (err.message === 'Network Error') {
             errorToast(t('errorNetwork'));
           }
@@ -51,48 +52,50 @@ const LoginForm = () => {
     >
       {({
         values,
-        errors,
-        touched,
         handleChange,
         handleBlur,
         handleSubmit,
-        isSubmitting,
       }) => (
-        <form className="col-12 col-md-6 mt-3 mt-mb-0" onSubmit={handleSubmit}>
-          <h1 className="text-center mb-4">{t('loginPage.enter')}</h1>
-          <div className="form-floating mb-3">
-            <input
-              className="form-control"
-              type="username"
-              name="username"
+        <Form className="col-12 col-md-6 mt-3 mt-mb-0" onSubmit={handleSubmit}>
+          <h2 className="text-center mb-4">{t('loginPage.enter')}</h2>
+          <Form.Group className="form-floating mb-3">
+            <Form.Control
+              placeholder={t('loginPage.username')}
+              required
               autoComplete="username"
+              id="username"
+              type="text"
+              name="username"
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.username}
-              placeholder={t('loginPage.username')}
+              isInvalid={authFailed}
             />
-            <label htmlFor="username">{t('loginPage.username')}</label>
-            {errors.username && touched.username && errors.username}
-          </div>
-          <div className="form-floating mb-3">
-            <input
-              className="form-control"
+            <Form.Label htmlFor="username">{t('loginPage.username')}</Form.Label>
+          </Form.Group>
+          <Form.Group className="form-floating mb-4">
+            <Form.Control
+              placeholder={t('loginPage.password')}
+              required
+              id="password"
               type="password"
               name="password"
-              autoComplete="password"
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.password}
-              placeholder={t('loginPage.password')}
+              isInvalid={authFailed}
             />
-            <label className="form-label" htmlFor="password">{t('loginPage.password')}</label>
-            {errors.password && touched.password && errors.password}
-            {authFailed ? t('loginPage.noValid') : errors.password}
-          </div>
-          <button type="submit" className="w-100 mb-3 btn btn-outline-primary" disabled={isSubmitting}>
+            <Form.Label htmlFor="password">{t('loginPage.password')}</Form.Label>
+            {authFailed && (
+            <Form.Control.Feedback type="invalid" tooltip placement="right">
+              {t('loginPage.noValid')}
+            </Form.Control.Feedback>
+            )}
+          </Form.Group>
+          <Button type="submit" className="w-100 mb-3" variant="outline-primary">
             {t('loginPage.enter')}
-          </button>
-        </form>
+          </Button>
+        </Form>
       )}
     </Formik>
   );

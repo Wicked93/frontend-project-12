@@ -13,18 +13,20 @@ export const getData = createAsyncThunk('channels/getData', async (payload) => {
 });
 
 const channelsAdapter = createEntityAdapter();
-const initialState = {
-  ...channelsAdapter.getInitialState(),
-  id: 1,
-};
+const initialState = channelsAdapter.getInitialState();
 
 const channelsSlice = createSlice({
   name: 'channels',
   initialState,
   reducers: {
-    changeChannelID: (state, { payload }) => ({ ...state, id: payload }),
+    changeChannelID: (state, { payload }) => { state.currentChannel = payload; },
     AddChannel: channelsAdapter.addOne,
-    removeChannel: (state, { payload }) => channelsAdapter.removeOne(state, payload.id),
+    removeChannel: (state, { payload }) => {
+      if (state.currentChannel === payload.id) {
+        state.currentChannel = 1;
+      }
+      channelsAdapter.removeOne(state, payload.id);
+    },
     renameChannel: (state, { payload }) => channelsAdapter.updateOne(state, {
       id: payload.id,
       changes: { name: payload.name },
@@ -33,16 +35,16 @@ const channelsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getData.fulfilled, (state, { payload }) => {
-        const { channels } = payload;
-        console.log(getData);
+        const { channels, currentChannelId } = payload;
         channelsAdapter.setAll(state, channels);
+        state.currentChannel = currentChannelId;
       });
   },
 });
 
 export const selectors = channelsAdapter.getSelectors((state) => state.channels);
 export const getChannels = (state) => selectors.selectAll(state);
-export const getActiveChannel = (state) => state.channels.id;
+export const getActiveChannel = (state) => state.channels.currentChannel;
 export const {
   AddChannel, removeChannel, renameChannel, changeChannelID,
 } = channelsSlice.actions;
