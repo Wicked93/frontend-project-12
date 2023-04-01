@@ -1,5 +1,8 @@
 /* eslint-disable no-undef */
 import {
+  React,
+} from 'react';
+import {
   Button, Dropdown, ButtonGroup,
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,7 +23,6 @@ const Channels = ({ channels, currectChannelID }) => {
   const changeCurrentID = (id) => {
     dispatch(changeChannelID(id));
   };
-
   return (
     <div className="col-4 col-md-2 border-end pt-5 px-0 bg-light">
       <div className="d-flex justify-content-between mb-2 ps-4 pe-2">
@@ -34,7 +36,7 @@ const Channels = ({ channels, currectChannelID }) => {
         </Button>
       </div>
       <ul className="nav flex-column nav-pills nav-fill px-2">
-      {channels.map((item) => (
+        {channels.map((item) => (
           <li key={item.id} className="nav-item w-100">
             <ButtonGroup className="d-flex dropdown btn-group channelsBtn">
               <Button
@@ -49,7 +51,7 @@ const Channels = ({ channels, currectChannelID }) => {
                 && (
                   <Dropdown>
                     <Dropdown.Toggle id="dropdown-basic" className={item.id === currectChannelID ? activeClassButton : classBtnGroup}>
-                      <span className="visually-hidden">{t('channelManagement')}</span>
+                      <span className="visually-hidden">{t('modal.channelManagement')}</span>
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                       <Dropdown.Item onClick={() => dispatch(openModal({ type: 'removing', itemId: item.id }))} variant="light" eventKey="1">{t('modal.removeChannel')}</Dropdown.Item>

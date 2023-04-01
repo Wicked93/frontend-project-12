@@ -38,51 +38,51 @@ const Messages = ({ message, currectChannelID, correctChatName }) => {
         text: '',
       }
   }
-  validationSchema={textSchema}
-  onSubmit={async (values, { resetForm }) => {
-    try {
-      const messageText = filter.clean(values.text);
-      const messageNew = {
-        channelId: currectChannelID,
-        username: auth.getUserName(),
-        text: messageText,
-      };
-      soc.sendNewMessage(messageNew);
-      resetForm();
-    } catch (err) {
-      console.log(err.message);
-    }
-  }}
->
-  {({
-    values,
-    errors,
-    touched,
-    handleChange,
-    handleBlur,
-    handleSubmit,
-    isSubmitting,
-  }) => (
-    <div className="col p-0 h-100">
-      <div className="d-flex flex-column h-100">
-        <div className="bg-light mb-4 p-3 shadow-sm small">
-          <p className="m-0">
-            <b>{`# ${correctChatName}`}</b>
-          </p>
-          <span className="text-muted">{t('messagesQuantity.counter.count', { count: message.length })}</span>
-        </div>
-        <div id="messages-box" className="chat-messages overflow-auto px-5 ">
-          {message?.map((item) => (
-              <div key={item.id} className="text-break mb-2">
-                <b>{item.username}</b>
-                :
-                {' '}
-                {item.text}
-              </div>
-            ))}
-            <div ref={messagesEndRef} />
-        </div>
-        <div className="mt-auto px-5 py-3">
+      validationSchema={textSchema}
+      onSubmit={async (values, { resetForm }) => {
+        try {
+          const messageText = filter.clean(values.text);
+          const messageNew = {
+            channelId: currectChannelID,
+            username: auth.getUserName(),
+            text: messageText,
+          };
+          soc.sendNewMessage(messageNew);
+          resetForm();
+        } catch (err) {
+          console.log(err.message);
+        }
+      }}
+    >
+      {({
+        values,
+        errors,
+        touched,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        isSubmitting,
+      }) => (
+        <div className="col p-0 h-100">
+          <div className="d-flex flex-column h-100">
+            <div className="bg-light mb-4 p-3 shadow-sm small">
+              <p className="m-0">
+                <b>{`# ${correctChatName}`}</b>
+              </p>
+              <span className="text-muted">{t('messagesQuantity.counter.count', { count: message.length })}</span>
+            </div>
+            <div id="messages-box" className="chat-messages overflow-auto px-5 ">
+              {message?.map((item) => (
+                <div key={item.id} className="text-break mb-2">
+                  <b>{item.username}</b>
+                  :
+                  {' '}
+                  {item.text}
+                </div>
+              ))}
+              <div ref={messagesEndRef} />
+            </div>
+            <div className="mt-auto px-5 py-3">
               <form className="py-1 border rounded-2" onSubmit={handleSubmit}>
                 <div className="input-group has-validation">
                   <input
@@ -103,11 +103,11 @@ const Messages = ({ message, currectChannelID, correctChatName }) => {
                   </Button>
                 </div>
               </form>
-              </div>
+            </div>
           </div>
         </div>
       )}
-      </Formik>
+    </Formik>
   );
 };
 

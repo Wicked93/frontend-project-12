@@ -1,4 +1,7 @@
 /* eslint-disable max-len */
+import {
+  React,
+} from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,8 +15,10 @@ const RemoveModal = ({ currectChannelID }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const soc = useSocket();
-  const { item } = useSelector((store) => store.modal);  
+  const { item } = useSelector((store) => store.modal);
+
   const currentChannel = useSelector((state) => selectors.selectAll(state).find((it) => it.id === item));
+
   const startChannelId = 1;
   const handleRemove = () => {
     soc.deleteChannel(currentChannel);

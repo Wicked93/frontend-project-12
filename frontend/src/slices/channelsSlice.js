@@ -26,6 +26,8 @@ const channelsSlice = createSlice({
         state.currentChannel = 1;
       }
       channelsAdapter.removeOne(state, payload.id);
+      // eslint-disable-next-line no-debugger
+      // debugger;
     },
     renameChannel: (state, { payload }) => channelsAdapter.updateOne(state, {
       id: payload.id,
@@ -45,6 +47,7 @@ const channelsSlice = createSlice({
 export const selectors = channelsAdapter.getSelectors((state) => state.channels);
 export const getChannels = (state) => selectors.selectAll(state);
 export const getActiveChannel = (state) => state.channels.currentChannel;
+
 export const {
   AddChannel, removeChannel, renameChannel, changeChannelID,
 } = channelsSlice.actions;
